@@ -16,13 +16,12 @@ Start:
 open_lbl db 'Opening connection to ', 0
 
 path    db '/'
-        defs 69              
+        defs 254              
 server  db 'nihirash.net'
         defs 58    
 port    db '70'
         defs 5
 
-data_buff   defs 255
 page_buffer 
     incbin "index.pg"
     db 0

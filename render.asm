@@ -124,7 +124,7 @@ downPg:
 
     ld hl, hist
     ld de, path
-    ld bc, 147
+    ld bc, 322
     ldir
 
     ld hl, server_buffer
@@ -147,25 +147,6 @@ downFl:
     call cleanIBuff
     ld hl, file_buffer
     call findFnme
-    jp isImage
-dfl:
-    ld hl, file_buffer
-    call findFnme
-    ld de, iBuff
-    ld bc, 65
-    ldir
-    
-    call input
-    ld hl, server_buffer
-    ld de, file_buffer
-    ld bc, port_buffer
-    call makeRequest
-    
-    ld hl, iBuff
-    call downloadData
-    call showCursor
-    ret
-
 isImage:
 	ld a, (hl)
 	and a
@@ -187,7 +168,7 @@ checkImg:
 	call searchRing
 	cp 1
 	jr z, loadImage
-	jp dfl
+	ret
 loadImage:
 	ld hl, server_buffer
 	ld de, file_buffer
@@ -468,7 +449,7 @@ show_offset     db  0
     display $
 cursor_pos      db  1
 
-head      db "  UGophy - ZX-UNO Gopher client v. 0.3 (c) Alexander Sharikhin  ",0
+head      db "   Spec-Goph - ZX Gopher client v. 0.1 (c) Alexander Sharikhin  ",0
 
 cleanLine db "                                                                ",0
 
@@ -480,7 +461,7 @@ type_unkn db "Unknown type ", 0
 
     display $
 
-file_buffer defs 70     ; URI path
+file_buffer defs 255     ; URI path
 server_buffer defs 70   ; Host name
 port_buffer defs 7      ; Port
 
