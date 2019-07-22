@@ -1,40 +1,4 @@
-SCANDBLCTRL_REG = #0B
-ZXUNO_ADDR = #FC3B
-ZXUNO_REG = #FD3B
 
-setNoTurboMode:
-    push af
-    push bc
-
-    ld a, SCANDBLCTRL_REG
-    ld bc, ZXUNO_ADDR
-    out (c), a 
-
-    ld bc, ZXUNO_REG
-    in a, (c)
-    and #3f
-    out (c), a
-    
-    pop bc
-    pop af
-    ret
-
-setTurbo4Mode:
-    push af
-    push bc
-    ld a, SCANDBLCTRL_REG
-    ld bc, ZXUNO_ADDR
-    out (c), a 
-
-    ld bc, ZXUNO_REG
-    in a, (c)
-    and #3f
-    or #80
-    out (c), a
-    
-    pop bc
-    pop af
-    ret
 
 ; HL - string
 ; Return: bc - len
@@ -82,7 +46,13 @@ atoi	ld a, (de)
         inc de
 		
         jr      atoi
-
+        
+findEnd:
+    ld a,(hl)
+    and a
+    ret z
+    inc hl
+    jr findEnd
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
